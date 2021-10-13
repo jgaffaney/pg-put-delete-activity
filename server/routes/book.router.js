@@ -17,6 +17,26 @@ router.get('/', (req, res) => {
   });
 });
 
+// Marks a book as read
+router.put('/:id', (req, res) => {
+    let id = req.params.id;
+    console.log('in mark as read PUT with id: ', id);
+    let queryText = `
+    UPDATE "books"
+    SET "isRead" = true
+    WHERE "id" = $1;
+    `
+    let values = [id];
+    pool.query(queryText, values)
+  .then((response) => {
+    console.log('Update Successful: ', response);
+    res.sendStatus(200);
+  }).catch((error) => {
+    console.log('Error on mark as read: ', error);
+    res.sendStatus(500)
+  })
+})
+
 // Deletes a book from the list of awesome reads
 router.delete('/:id', (req, res) => {
     console.log('in DELETE');
