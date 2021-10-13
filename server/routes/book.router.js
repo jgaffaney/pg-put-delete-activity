@@ -1,3 +1,4 @@
+const { request } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -15,6 +16,24 @@ router.get('/', (req, res) => {
     res.sendStatus(500);
   });
 });
+
+// Deletes a book from the list of awesome reads
+router.delete('/:id', (req, res) => {
+    console.log('in DELETE');
+    let id = req.params.id;
+    let queryText = `
+        DELETE FROM "books"
+        WHERE "id" = $1;
+    `
+    let values = [id];
+    pool.query(queryText, values)
+    .then(response => {
+      console.log('DELETE Successful: ', response);
+      res.sendStatus(204)
+    }).catch(error => {
+      console.log('Error on DELETE: ', error);
+    });  
+})
 
 // Adds a new book to the list of awesome reads
 // Request body must be a book object with a title and author.

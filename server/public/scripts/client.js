@@ -8,6 +8,13 @@ function addClickHandlers() {
   $('#submitBtn').on('click', handleSubmit);
 
   // TODO - Add code for edit & delete buttons
+  $('#bookShelf').on('click', '.deleteButton', handleDelete)
+}
+
+// a function to delete the book that was clicked
+function handleDelete() {
+  console.log('in handleDelete');
+  
 }
 
 function handleSubmit() {
@@ -55,9 +62,10 @@ function renderBooks(books) {
     let book = books[i];
     // For each book, append a new row to our table
     $('#bookShelf').append(`
-      <tr>
+      <tr data-id="${book.id}">
         <td>${book.title}</td>
         <td>${book.author}</td>
+        <td><button class="deleteButton">DELETE</button></td>
       </tr>
     `);
   }
