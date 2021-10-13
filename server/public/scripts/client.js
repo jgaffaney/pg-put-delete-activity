@@ -14,6 +14,18 @@ function addClickHandlers() {
 // a function to delete the book that was clicked
 function handleDelete() {
   console.log('in handleDelete');
+  console.log('this is $this id ', $(this).closest('tr').data('id'));
+  let idToDelete = $(this).closest('tr').data('id');
+  $.ajax({
+      method: 'DELETE',
+      url: `/books/${idToDelete}`
+  }).then(function(response) {
+      console.log('Delete Successful: ', response);
+      refreshBooks();
+  }).catch(function(error) {
+      console.log('Error on delete: ', error);
+  })
+  
   
 }
 
